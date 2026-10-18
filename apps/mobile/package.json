@@ -23,10 +23,11 @@
     "typescript": "~6.0.3"
   },
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "start": "node -r ./polyfill.js ./node_modules/expo/bin/cli start",
+    "android": "node -r ./polyfill.js ./node_modules/expo/bin/cli start --android",
+    "ios": "node -r ./polyfill.js ./node_modules/expo/bin/cli start --ios",
+    "web": "node -r ./polyfill.js ./node_modules/expo/bin/cli start --web",
+    "postinstall": "node -e \"const fs=require('fs');const p='node_modules/expo/bin/cli';if(fs.existsSync(p)){let c=fs.readFileSync(p,'utf8');if(!c.includes('URL.parse')){fs.writeFileSync(p, 'if(!URL.parse){URL.parse=(u,b)=>{try{return new URL(u,b)}catch{return null}}};\\n'+c)}}\""
   },
   "private": true
 }
